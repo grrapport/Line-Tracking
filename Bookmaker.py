@@ -7,11 +7,13 @@ import json
 
 
 bookmaker_url = "http://lines.bookmaker.eu/"
+user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
+
 
 
 def get_bookmaker_odds(league_id):
     odds_avail = []
-    bookmaker_response = requests.get(bookmaker_url).content
+    bookmaker_response = requests.get(bookmaker_url, headers=user_agent).content
     root = ET.fromstring(bookmaker_response)
     for child in root.findall("./Leagues/league"):
         if child.attrib['IdLeague'] == str(league_id):
@@ -22,7 +24,6 @@ def get_bookmaker_odds(league_id):
         try:
             odd_xml = child.findall("./line")[0]
             game_time = datetime.datetime.strptime(child.attrib["gmdt"]+" "+child.attrib["gmtm"], "%Y%m%d %H:%M:%S")
-            #game_time = datetime.datetime.strptime("2019 11 09", "%Y %%m %d")
             line_time = datetime.datetime.now()
             game = Game_Lines.FullGameLine(game_time, line_time, "Bookmaker", odd_xml.attrib['unt'], odd_xml.attrib['unoddst'], odd_xml.attrib['ovoddst'], child.attrib['htm'], odd_xml.attrib['hoddst'], odd_xml.attrib['hsprdt'], odd_xml.attrib['hsprdoddst'], child.attrib['vtm'], odd_xml.attrib['voddst'], odd_xml.attrib['vsprdt'], odd_xml.attrib['vsprdoddst'])
             odds_avail.append(game)
