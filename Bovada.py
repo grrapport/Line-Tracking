@@ -1,7 +1,7 @@
 import requests
 import datetime
 import xml.etree.ElementTree as ET
-import Game_Lines
+import GameLines
 import jsonpickle
 import json
 
@@ -49,7 +49,7 @@ def convert_json_feed_to_line_object(dict):
                     over_line = tot["price"]["american"]
                 if tot["description"] == "Under":
                     under_line = tot["price"]["american"]
-    new_line = Game_Lines.FullGameLine(game_time, odd_time, bookmaker, total, under_line, over_line, team_1, team1_ml, team1_spread, team1_spread_line, team_2, team2_ml, team2_spread, team2_spread_line)
+    new_line = GameLines.FullGameLine(game_time, odd_time, bookmaker, total, under_line, over_line, team_1, team1_ml, team1_spread, team1_spread_line, team_2, team2_ml, team2_spread, team2_spread_line)
     return new_line
 
 
