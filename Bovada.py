@@ -1,8 +1,6 @@
 import requests
 import datetime
-import xml.etree.ElementTree as ET
 import GameLines
-import jsonpickle
 import json
 
 
