@@ -16,6 +16,8 @@ class FullGameLine:
             except Exception as e:
                 print("Total not available for game")
                 self.total = None
+                self.under_line = None
+                self.over_line = None
             try:
                 self.team1_moneyline = int(t1ml)
                 self.team2_moneyline = int(t2ml)
