@@ -11,7 +11,7 @@ class SqlHandler:
             passwd="",
             database="bettinglines"
         )
-        self.cursor = mydb.cursor()
+        self.cursor = self.mydb.cursor()
 
     def insert_latest_ncaab_full_game_line(self, line):
         insert_ncaab_full_game_query = ("INSERT INTO NCAAB_Full_Game_Lines "
