@@ -12,5 +12,9 @@ bovada_lines = Bovada.get_bovada_ncaab_odds()
 bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
 all_lines = bookmaker_lines + bovada_lines
 for line in all_lines:
-    init_conn.insert_latest_ncaab_full_game_line(line)
+    try:
+        init_conn.insert_latest_ncaab_full_game_line(line)
+    except Exception as e:
+        print(e)
+        continue
 
