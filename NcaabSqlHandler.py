@@ -45,7 +45,7 @@ class SqlHandler:
         select_latest_full_game_ncaab_query = ("SELECT TOP 1 * FROM NCAAB_Full_Game_Lines WHERE "
                                                "(Team1 = %s or Team2 = %s) AND "
                                                "(Team1 = %s or Team2 = %s) AND "
-                                               "GameTime = '%s' AND"
+                                               "GameTime = %s AND"
                                                "Bookmaker = %s AND"
                                                "Newest = 1"
                                                )
@@ -61,8 +61,8 @@ class SqlHandler:
     def select_all_available_ncaab_full_game_lines(self):
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         ret = []
-        select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime > '%s'"
-        self.cursor.execute(select_all_full_game_ncaab_query, now)
+        select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime > %s"
+        self.cursor.execute(select_all_full_game_ncaab_query, (now, ))
         result = self.cursor.fetchall()
         for row in result:
             temp = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
