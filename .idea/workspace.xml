@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="169acd6f-c06e-44b3-a2b0-17f4ff221fab" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/NcaabLineGetter.py" beforeDir="false" afterPath="$PROJECT_DIR$/NcaabLineGetter.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bookmaker.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bookmaker.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Bovada.py" beforeDir="false" afterPath="$PROJECT_DIR$/Bovada.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GameLines.py" beforeDir="false" afterPath="$PROJECT_DIR$/GameLines.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NcaabSqlHandler.py" beforeDir="false" afterPath="$PROJECT_DIR$/NcaabSqlHandler.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -15,8 +20,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Bookmaker.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="525">
-              <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="31" />
+            <state relative-caret-position="593">
+              <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -27,29 +32,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Bovada.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-164">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-              <folding>
-                <element signature="e#0#15#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/GameLines.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="15" lean-forward="true" selection-start-column="15" selection-end-column="15" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/NcaabSqlHandler.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="651">
-              <caret line="47" column="59" lean-forward="true" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
+            <state relative-caret-position="915">
+              <caret line="61" selection-start-line="61" selection-end-line="61" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -58,6 +42,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/GameLines.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/NcaabSqlHandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1140">
+              <caret line="76" selection-start-line="76" selection-end-line="76" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/NcaabLineGetter.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
@@ -86,12 +91,14 @@
       <list>
         <option value="$PROJECT_DIR$/NCAAB_Lines.py" />
         <option value="$PROJECT_DIR$/Game_Lines.py" />
-        <option value="$PROJECT_DIR$/Bovada.py" />
         <option value="$PROJECT_DIR$/SqlHandler.py" />
         <option value="$PROJECT_DIR$/LineGetter.py" />
-        <option value="$PROJECT_DIR$/Bookmaker.py" />
-        <option value="$PROJECT_DIR$/NcaabSqlHandler.py" />
         <option value="$PROJECT_DIR$/NcaabLineGetter.py" />
+        <option value="$PROJECT_DIR$/NcaabSqlHandler.py" />
+        <option value="$PROJECT_DIR$/Bookmaker.py" />
+        <option value="$PROJECT_DIR$/Bovada.py" />
+        <option value="$PROJECT_DIR$/GameLines.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -175,38 +182,11 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/Bookmaker.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="31" lean-forward="true" selection-start-line="35" selection-start-column="4" selection-end-line="35" selection-end-column="31" />
+        <state relative-caret-position="593">
+          <caret line="40" lean-forward="true" selection-start-line="40" selection-end-line="40" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/NcaabSqlHandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="651">
-          <caret line="47" column="59" lean-forward="true" selection-start-line="47" selection-start-column="59" selection-end-line="47" selection-end-column="59" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/Bovada.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-164">
-          <caret line="5" selection-start-line="5" selection-end-line="5" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/GameLines.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="15" lean-forward="true" selection-start-column="15" selection-end-column="15" />
         </state>
       </provider>
     </entry>
@@ -217,6 +197,40 @@
           <folding>
             <element signature="e#0#16#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Bovada.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="915">
+          <caret line="61" selection-start-line="61" selection-end-line="61" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="103" column="12" selection-start-line="103" selection-start-column="12" selection-end-line="103" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/NcaabSqlHandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1140">
+          <caret line="76" selection-start-line="76" selection-end-line="76" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/GameLines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="24" lean-forward="true" selection-start-line="17" selection-start-column="24" selection-end-line="17" selection-end-column="24" />
         </state>
       </provider>
     </entry>

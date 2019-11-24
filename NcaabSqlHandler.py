@@ -18,7 +18,7 @@ class SqlHandler:
                                         "(GameTime, LineTime, Bookmaker, Team1, Team2, Total, OverLine, UnderLine,"
                                         " T1Moneyline, T1Spread, T1SpreadLine, T2Moneyline, T2Spread, T2SpreadLine,"
                                         " Newest) "
-                                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s"
+                                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                                         )
         data = (
             line.game_time,
@@ -74,20 +74,7 @@ class SqlHandler:
         self.cursor.close()
         self.mydb.close()
 
-"""
-Traceback (most recent call last):
-  File "NcaabLineGetter.py", line 9, in <module>
-    current_lines = init_conn.select_all_available_ncaab_full_game_lines()
-  File "/home/grrapport/workspace/Line-Tracking/NcaabSqlHandler.py", line 64, in select_all_available_ncaab_full_ga
-me_lines
-    self.cursor.execute(select_all_full_game_ncaab_query, now)
-  File "/home/grrapport/.local/lib/python3.6/site-packages/mysql/connector/cursor_cext.py", line 248, in execute
-    prepared = self._cnx.prepare_for_mysql(params)
-  File "/home/grrapport/.local/lib/python3.6/site-packages/mysql/connector/connection_cext.py", line 615, in prepar
-e_for_mysql
-    raise ValueError("Could not process parameters")
-ValueError: Could not process parameters
-"""
+
 
 
 

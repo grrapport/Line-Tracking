@@ -60,7 +60,3 @@ def get_bovada_ncaab_odds():
     return current_lines
 
 
-for odd in get_bovada_ncaab_odds():
-    print(odd.team1+str(odd.team1_moneyline)+odd.team2+str(odd.team2_moneyline))
-    print(odd.total)
-    print(odd.team1_spread)

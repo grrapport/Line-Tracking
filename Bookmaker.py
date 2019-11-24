@@ -37,10 +37,5 @@ def get_ncaab_full_game_lines():
     return get_bookmaker_odds(4)
 
 
-for odd in get_bookmaker_odds(4):
-    print(odd.team1+str(odd.team1_moneyline)+odd.team2+str(odd.team2_moneyline))
-    print(odd.total)
-    print(odd.team1_spread)
-
 
 
