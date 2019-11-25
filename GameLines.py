@@ -58,6 +58,11 @@ class FullGameLine:
             moneyline_bool = self.team1_moneyline == other.team2_moneyline and self.team2_moneyline == team1_moneyline
         return gt_bool and team1_bool and team2_bool and tot_bool and tot_line_bool and t1spread_bool and t2spread_bool and moneyline_bool
 
+    def is_same_game(self, other):
+        gt_bool = self.game_time == other.game_time
+        team1_bool = self.team1 == other.team1 or self.team1 == other.team2
+        team2_bool = self.team2 == other.team1 or self.team2 == other.team2
+        return gt_bool and team2_bool and team1_bool
 
 
 

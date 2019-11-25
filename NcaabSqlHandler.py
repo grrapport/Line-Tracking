@@ -52,10 +52,10 @@ class SqlHandler:
         self.cursor.execute(select_latest_full_game_ncaab_query, (team1, team1, team2, team2,
                                                                   gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
         result = self.cursor.fetchall()
-        for row in result:
-            temp = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
-                                          temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
-            ret.append(temp)
+        for temp in result:
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+                                              temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
+            ret.append(new_line)
         return ret
 
     def select_all_available_ncaab_full_game_lines(self):
@@ -64,11 +64,34 @@ class SqlHandler:
         select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime > %s"
         self.cursor.execute(select_all_full_game_ncaab_query, (now, ))
         result = self.cursor.fetchall()
-        for row in result:
-            temp = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
-                                          temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
-            ret.append(temp)
+        for temp in result:
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+                                              temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
+            ret.append(new_line)
         return ret
+
+    def select_all_available_ncaab_full_game_lines_by_bookmaker(self, bookmaker):
+        now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        ret = []
+        select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime > %s and Bookmaker = %s"
+        self.cursor.execute(select_all_full_game_ncaab_query, (now, bookmaker))
+        result = self.cursor.fetchall()
+        for temp in result:
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+                                              temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
+            ret.append(new_line)
+        return ret
+
+    def update_games_to_old_line(self, gametime, bookmaker, team1, team2):
+        update_latest_column = ("UPDATE NCAAB_Full_Game_Lines"
+                                "SET Newest = 0"
+                                "WHERE (Team1 = %s or Team2 = %s) AND "
+                                "(Team1 = %s or Team2 = %s) AND "
+                                "GameTime = %s AND"
+                                "Bookmaker = %s"
+                                )
+        self.cursor.execute(update_latest_column,  (team1, team1, team2, team2,
+                                                    gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
 
     def close(self):
         self.cursor.close()
