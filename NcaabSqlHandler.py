@@ -83,8 +83,8 @@ class SqlHandler:
         return ret
 
     def update_games_to_old_line(self, gametime, bookmaker, team1, team2):
-        update_latest_column = ("UPDATE NCAAB_Full_Game_Lines"
-                                "SET Newest = 0 "
+        update_latest_column = ("UPDATE NCAAB_Full_Game_Lines "
+                                "SET Newest= 0 "
                                 "WHERE (Team1 = %s or Team2 = %s) AND "
                                 "(Team1 = %s or Team2 = %s) AND "
                                 "GameTime = %s AND "
