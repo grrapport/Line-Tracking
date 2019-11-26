@@ -51,7 +51,7 @@ class FullGameLine:
         if self.team1 == other.team1:
             t1spread_bool = self.team1_spread == other.team1_spread and self.team1_spread_line == other.team1_spread_line
             t2spread_bool = self.team2_spread == other.team2_spread and self.team2_spread_line == other.team2_spread_line
-            moneyline_bool = self.team1_moneyline == other.team1_moneyline and self.team2_moneyline == team2_moneyline
+            moneyline_bool = self.team1_moneyline == other.team1_moneyline and self.team2_moneyline == other.team2_moneyline
         else:
             t1spread_bool = self.team1_spread == other.team2_spread and self.team1_spread_line == other.team2_spread_line
             t2spread_bool = self.team2_spread == other.team1_spread and self.team2_spread_line == other.team1_spread_line
