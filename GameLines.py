@@ -4,6 +4,7 @@ import datetime
 class FullGameLine:
     def __init__(self, gtime, ltime, bookmaker, tot, underline, overline, t1, t1ml, t1spr, t1sprl, t2, t2ml, t2spr, t2sprl):
         try:
+            #todo: Trim team names
             self.game_time = gtime
             self.line_time = ltime
             self.book = bookmaker

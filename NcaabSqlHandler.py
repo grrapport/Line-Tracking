@@ -37,6 +37,7 @@ class SqlHandler:
             line.team2_spread_line,
             True
         )
+        print(data)
         self.cursor.execute(insert_ncaab_full_game_query, data)
         self.mydb.commit()
 
@@ -84,7 +85,7 @@ class SqlHandler:
 
     def update_games_to_old_line(self, gametime, bookmaker, team1, team2):
         update_latest_column = ("UPDATE NCAAB_Full_Game_Lines "
-                                "SET Newest= 0 "
+                                "SET Newest = 0 "
                                 "WHERE (Team1 = %s or Team2 = %s) AND "
                                 "(Team1 = %s or Team2 = %s) AND "
                                 "GameTime = %s AND "
