@@ -9,13 +9,8 @@ import traceback
 
 
 def update_lines_db(lines, sql_conn):
-    old_lines = sql_conn.select_all_available_ncaab_full_game_lines_by_bookmaker(lines[0].book)
     for line in lines:
-        match = None
-        for old in old_lines:
-            if line.is_same_game(old):
-                match = old
-                break
+        match = sql_conn.select_latest_ncaa_line(line.game_time, line.book, line.team1, line.team2)
         if match is None:
             print("*********************************************************")
             print("No match found, will insert new line")

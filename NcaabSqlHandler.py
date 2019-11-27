@@ -61,15 +61,15 @@ class SqlHandler:
 
     def select_all_available_ncaab_full_game_lines(self):
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        ret = []
+        new_line = None
         select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime > %s"
         self.cursor.execute(select_all_full_game_ncaab_query, (now, ))
         result = self.cursor.fetchall()
         for temp in result:
             new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
                                               temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
-            ret.append(new_line)
-        return ret
+            break
+        return new_line
 
     def select_all_available_ncaab_full_game_lines_by_bookmaker(self, bookmaker):
         now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
