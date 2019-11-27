@@ -55,7 +55,7 @@ class SqlHandler:
                                                                   gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
         result = self.cursor.fetchall()
         for temp in result:
-            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[7], temp[6], temp[3], temp[8],
                                               temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
             break
         return new_line
@@ -67,7 +67,7 @@ class SqlHandler:
         self.cursor.execute(select_all_full_game_ncaab_query, (now, ))
         result = self.cursor.fetchall()
         for temp in result:
-            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[7], temp[6], temp[3], temp[8],
                                               temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
             ret.append(new_line)
         return ret
@@ -79,7 +79,7 @@ class SqlHandler:
         self.cursor.execute(select_all_full_game_ncaab_query, (now, bookmaker))
         result = self.cursor.fetchall()
         for temp in result:
-            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[6], temp[7], temp[3], temp[8],
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[7], temp[6], temp[3], temp[8],
                                               temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
             ret.append(new_line)
         return ret
