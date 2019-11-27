@@ -39,8 +39,12 @@ def send_email(email_text):
 
 
 conn = NcaabSqlHandler.SqlHandler()
+
 bovada_consecutive_fail = 0
+bovada_exception_string = ""
+
 bookmaker_consecutive_fail = 0
+bookmaker_exception_string = ""
 
 while True:
     try:
