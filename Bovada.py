@@ -61,12 +61,9 @@ def get_bovada_ncaab_odds():
         current_lines.append(convert_json_feed_to_line_object(thing))
     return current_lines
 
-
 """
 for odd in get_bovada_ncaab_odds():
-    print(odd.team1+str(odd.team1_moneyline)+odd.team2+str(odd.team2_moneyline))
-    print(odd.total)
-    print(odd.team1_spread)
+    print(odd.output())
 """
 
 

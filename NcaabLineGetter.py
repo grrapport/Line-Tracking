@@ -16,11 +16,18 @@ def update_lines_db(lines, sql_conn):
                 match = old
                 break
         if match is None:
+            print("No match found, will insert new line")
             sql_conn.insert_latest_ncaab_full_game_line(line)
             continue
         if line == match:
+            print("Line matches, will not insert or update lines")
+            print("new line: "+line.output())
+            print("match in db: "+match.output())
             continue
         if line != match:
+            print("Line changed! Will update entries in db and insert new one")
+            print("new line: " + line.output())
+            print("match in db: " + match.output())
             sql_conn.update_games_to_old_line(line.game_time, line.book, line.team1, line.team2)
             sql_conn.insert_latest_ncaab_full_game_line(line)
             continue
