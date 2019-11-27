@@ -56,9 +56,9 @@ try:
             update_lines_db(current_bovada_lines, conn)
             bovada_consecutive_fail = 0
             bovada_exception_string = ""
-        except Exception:
+        except Exception as e:
             bovada_consecutive_fail += 1
-            bovada_exception_string += "\n\n"+traceback.print_exc()
+            bovada_exception_string += "\n\n"+str(e)
             if bovada_consecutive_fail > 15:
                 bovada_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bovada_exception_string)
@@ -70,13 +70,13 @@ try:
             bookmaker_exception_string = ""
         except Exception:
             bookmaker_consecutive_fail += 1
-            bookmaker_exception_string += "\n\n"+traceback.print_exc()
+            bookmaker_exception_string += "\n\n"+str(e)
             if bookmaker_consecutive_fail > 15:
                 bookmaker_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bookmaker_exception_string)
         time.sleep(10)
-except Exception:
-    traceback.print_exc()
+except Exception as e:
+    print(str(e))
     conn.close()
 
 
