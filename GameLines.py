@@ -14,8 +14,6 @@ class FullGameLine:
                 self.under_line = int(underline)
                 self.over_line = int(overline)
             except Exception as e:
-                print("Total not available for game")
-                print(str(e))
                 self.total = None
                 self.under_line = None
                 self.over_line = None
@@ -23,8 +21,6 @@ class FullGameLine:
                 self.team1_moneyline = int(t1ml)
                 self.team2_moneyline = int(t2ml)
             except Exception as e:
-                print("Moneylines not available for game")
-                print(str(e))
                 self.team1_moneyline = None
                 self.team2_moneyline = None
             try:
@@ -33,8 +29,6 @@ class FullGameLine:
                 self.team2_spread = float(t2spr)
                 self.team2_spread_line = int(t2sprl)
             except Exception as e:
-                print("Point spreads not available for game")
-                print(str(e))
                 self.team1_spread = None
                 self.team1_spread_line = None
                 self.team2_spread = None
