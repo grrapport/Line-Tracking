@@ -39,6 +39,9 @@ def send_email(email_text):
 
 
 conn = NcaabSqlHandler.SqlHandler()
+bovada_consecutive_fail = 0
+bookmaker_consecutive_fail = 0
+
 while True:
     try:
         current_bovada_lines = Bovada.get_bovada_ncaab_odds()
