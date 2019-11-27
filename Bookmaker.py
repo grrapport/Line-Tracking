@@ -8,6 +8,7 @@ bookmaker_url = "http://lines.bookmaker.eu/"
 user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 #todo: fix timezone
 
+
 def get_bookmaker_odds(league_id):
     odds_avail = []
     bookmaker_response = requests.get(bookmaker_url, headers=user_agent).content

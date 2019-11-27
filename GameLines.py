@@ -62,6 +62,10 @@ class FullGameLine:
         gt_bool = self.game_time == other.game_time
         team1_bool = self.team1 == other.team1 or self.team1 == other.team2
         team2_bool = self.team2 == other.team1 or self.team2 == other.team2
+        if self.team1 == other.team1:
+            print(str(gt_bool))
+            print(str(team1_bool))
+            print(str(team2_bool))
         return gt_bool and team2_bool and team1_bool
 
     def output(self):
