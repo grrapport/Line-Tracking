@@ -54,7 +54,7 @@ while True:
         bovada_exception_string = ""
     except Exception as e:
         bovada_consecutive_fail += 1
-        bovada_exception_string += "\n\n"+e
+        bovada_exception_string += "\n\n"+str(e)
         if bovada_consecutive_fail > 15:
             bovada_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
             send_email(bovada_exception_string)
@@ -66,7 +66,7 @@ while True:
         bookmaker_exception_string = ""
     except Exception as e:
         bookmaker_consecutive_fail += 1
-        bookmaker_exception_string += "\n\n"+e
+        bookmaker_exception_string += "\n\n"+str(e)
         if bookmaker_consecutive_fail > 15:
             bookmaker_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
             send_email(bookmaker_exception_string)
