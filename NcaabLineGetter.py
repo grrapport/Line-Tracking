@@ -10,8 +10,8 @@ import traceback
 
 def update_lines_db(lines, sql_conn):
     old_lines = sql_conn.select_all_available_ncaab_full_game_lines_by_bookmaker(lines[0].book)
-    match = None
     for line in lines:
+        match = None
         for old in old_lines:
             if line.is_same_game(old):
                 match = old
