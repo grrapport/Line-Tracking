@@ -46,8 +46,8 @@ class SqlHandler:
         select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Full_Game_Lines WHERE "
                                                "(Team1 = %s or Team2 = %s) AND "
                                                "(Team1 = %s or Team2 = %s) AND "
-                                               "GameTime = %s AND"
-                                               "Bookmaker = %s AND"
+                                               "GameTime = %s AND "
+                                               "Bookmaker = %s AND "
                                                "Newest = 1 "
                                                "Limit 1"
                                                )
