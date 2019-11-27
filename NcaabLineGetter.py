@@ -68,7 +68,7 @@ try:
             update_lines_db(current_bookmaker_lines, conn)
             bookmaker_consecutive_fail = 0
             bookmaker_exception_string = ""
-        except Exception:
+        except Exception as e:
             bookmaker_consecutive_fail += 1
             bookmaker_exception_string += "\n\n"+str(e)
             if bookmaker_consecutive_fail > 15:
