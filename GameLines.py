@@ -4,19 +4,18 @@ import datetime
 class FullGameLine:
     def __init__(self, gtime, ltime, bookmaker, tot, underline, overline, t1, t1ml, t1spr, t1sprl, t2, t2ml, t2spr, t2sprl):
         try:
-            #todo: Trim team names
             self.game_time = gtime
             self.line_time = ltime
-            self.book = bookmaker
-            self.team1 = t1
-            self.team2 = t2
+            self.book = bookmaker.strip()
+            self.team1 = t1.strip()
+            self.team2 = t2.strip()
             try:
                 self.total = float(tot)
                 self.under_line = int(underline)
                 self.over_line = int(overline)
             except Exception as e:
                 print("Total not available for game")
-                print(e)
+                print(str(e))
                 self.total = None
                 self.under_line = None
                 self.over_line = None
@@ -25,7 +24,7 @@ class FullGameLine:
                 self.team2_moneyline = int(t2ml)
             except Exception as e:
                 print("Moneylines not available for game")
-                print(e)
+                print(str(e))
                 self.team1_moneyline = None
                 self.team2_moneyline = None
             try:
@@ -33,9 +32,9 @@ class FullGameLine:
                 self.team1_spread_line = int(t1sprl)
                 self.team2_spread = float(t2spr)
                 self.team2_spread_line = int(t2sprl)
-            except:
+            except Exception as e:
                 print("Point spreads not available for game")
-                print(e)
+                print(str(e))
                 self.team1_spread = None
                 self.team1_spread_line = None
                 self.team2_spread = None

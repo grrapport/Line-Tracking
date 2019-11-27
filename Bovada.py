@@ -6,6 +6,8 @@ import json
 
 user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 #todo: fix timezone
+#todo: remove rankings from team names
+
 
 def convert_json_feed_to_line_object(dict):
     teams_obj = dict["competitors"]
@@ -58,5 +60,13 @@ def get_bovada_ncaab_odds():
     for thing in test_dict[0]["events"]:
         current_lines.append(convert_json_feed_to_line_object(thing))
     return current_lines
+
+
+"""
+for odd in get_bovada_ncaab_odds():
+    print(odd.team1+str(odd.team1_moneyline)+odd.team2+str(odd.team2_moneyline))
+    print(odd.total)
+    print(odd.team1_spread)
+"""
 
 
