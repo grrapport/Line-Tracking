@@ -43,12 +43,13 @@ class SqlHandler:
 
     def select_latest_ncaa_line(self, gametime, bookmaker, team1, team2):
         ret = []
-        select_latest_full_game_ncaab_query = ("SELECT TOP 1 * FROM NCAAB_Full_Game_Lines WHERE "
+        select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Full_Game_Lines WHERE "
                                                "(Team1 = %s or Team2 = %s) AND "
                                                "(Team1 = %s or Team2 = %s) AND "
                                                "GameTime = %s AND"
                                                "Bookmaker = %s AND"
-                                               "Newest = 1"
+                                               "Newest = 1 "
+                                               "Limit 1"
                                                )
         self.cursor.execute(select_latest_full_game_ncaab_query, (team1, team1, team2, team2,
                                                                   gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
