@@ -4,8 +4,9 @@ import GameLines
 import json
 
 
-
 user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
+#todo: fix timezone
+#todo: remove rankings from team names
 
 
 def convert_json_feed_to_line_object(dict):
@@ -21,7 +22,8 @@ def convert_json_feed_to_line_object(dict):
     team2_ml = None
     team2_spread_line = None
     team2_spread = None
-    game_time = datetime.datetime.fromtimestamp(int(dict["startTime"])/1000)
+    # Adding 6 hours to the game time because the time is in UTC-6 and we are standardizing on UTC
+    game_time = datetime.datetime.fromtimestamp(int(dict["startTime"])/1000) + datetime.timedelta(hours=6)
     odd_time = datetime.datetime.now()
     bookmaker = "Bovada"
     odds_obj = dict["displayGroups"]
@@ -60,8 +62,9 @@ def get_bovada_ncaab_odds():
         current_lines.append(convert_json_feed_to_line_object(thing))
     return current_lines
 
-
+"""
 for odd in get_bovada_ncaab_odds():
-    print(odd.team1+str(odd.team1_moneyline)+odd.team2+str(odd.team2_moneyline))
-    print(odd.total)
-    print(odd.team1_spread)
+    print(odd.output())
+"""
+
+
