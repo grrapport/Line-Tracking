@@ -22,7 +22,8 @@ def convert_json_feed_to_line_object(dict):
     team2_ml = None
     team2_spread_line = None
     team2_spread = None
-    game_time = datetime.datetime.fromtimestamp(int(dict["startTime"])/1000)
+    # Adding 6 hours to the game time because the time is in UTC-6 and we are standardizing on UTC
+    game_time = datetime.datetime.fromtimestamp(int(dict["startTime"])/1000) + datetime.timedelta(hours=6)
     odd_time = datetime.datetime.now()
     bookmaker = "Bovada"
     odds_obj = dict["displayGroups"]

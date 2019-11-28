@@ -12,12 +12,8 @@ def update_lines_db(lines, sql_conn):
     for line in lines:
         match = sql_conn.select_latest_ncaa_line(line.game_time, line.book, line.team1, line.team2)
         if match is None:
-            print("*********************************************************")
             print("No match found, will insert new line")
             sql_conn.insert_latest_ncaab_full_game_line(line)
-            print("*********************************************************")
-            print("*********************************************************")
-            print("\n\n\n\n\n")
             continue
         if line == match:
             continue
@@ -77,6 +73,11 @@ try:
         time.sleep(10)
 except Exception as e:
     print(str(e))
+    email_text = "Line Getter Service has stopped.\n"
+    email_text += "Time: "+datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    email_text += "Exception: \n\n"
+    email_text += str(e)
+    send_email(email_text)
     conn.close()
 
 
