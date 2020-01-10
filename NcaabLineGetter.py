@@ -58,6 +58,8 @@ try:
             if bovada_consecutive_fail > 15:
                 bovada_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bovada_exception_string)
+                bovada_consecutive_fail = 0
+                bovada_exception_string = ""
 
         try:
             current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
@@ -70,7 +72,9 @@ try:
             if bookmaker_consecutive_fail > 15:
                 bookmaker_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bookmaker_exception_string)
-        time.sleep(10)
+                bookmaker_consecutive_fail = 0
+                bookmaker_exception_string = ""
+        time.sleep(5)
 except Exception as e:
     print(str(e))
     email_text = "Line Getter Service has stopped.\n"

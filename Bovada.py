@@ -5,8 +5,7 @@ import json
 
 
 user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
-#todo: fix timezone
-#todo: remove rankings from team names
+# TODO: Find a way to account for time changes. Daylight Savings sucks
 
 
 def convert_json_feed_to_line_object(dict):
@@ -62,9 +61,9 @@ def get_bovada_ncaab_odds():
         current_lines.append(convert_json_feed_to_line_object(thing))
     return current_lines
 
-"""
+
+'''
 for odd in get_bovada_ncaab_odds():
     print(odd.output())
-"""
-
+'''
 
