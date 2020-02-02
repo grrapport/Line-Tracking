@@ -1,5 +1,6 @@
 import Bookmaker
 import Bovada
+import Dimes
 import GameLines
 import NcaabSqlHandler
 import datetime
@@ -26,14 +27,14 @@ def update_lines_db(lines, sql_conn):
             continue
 
 
-def send_email(email_text):
+def send_email(text):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.connect('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
     server.login("actionchase@gmail.com", "lnkyaliduvshwicn")
     try:
-        server.sendmail("actionchase@gmail.com", "grrapport@gmail.com", email_text)
+        server.sendmail("actionchase@gmail.com", "grrapport@gmail.com", text)
     except Exception as e:
         print(e)
 
@@ -55,8 +56,8 @@ try:
         except Exception as e:
             bovada_consecutive_fail += 1
             bovada_exception_string += "\n\n"+str(e)
-            if bovada_consecutive_fail > 15:
-                bovada_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
+            if bovada_consecutive_fail > 25:
+                bovada_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bovada_exception_string)
                 bovada_consecutive_fail = 0
                 bovada_exception_string = ""
@@ -69,12 +70,12 @@ try:
         except Exception as e:
             bookmaker_consecutive_fail += 1
             bookmaker_exception_string += "\n\n"+str(e)
-            if bookmaker_consecutive_fail > 15:
-                bookmaker_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
+            if bookmaker_consecutive_fail > 25:
+                bookmaker_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bookmaker_exception_string)
                 bookmaker_consecutive_fail = 0
                 bookmaker_exception_string = ""
-        time.sleep(5)
+        time.sleep(7)
 except Exception as e:
     print(str(e))
     email_text = "Line Getter Service has stopped.\n"

@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="169acd6f-c06e-44b3-a2b0-17f4ff221fab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/5dimes.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dimes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/5dimes.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/NcaabLineGetter.py" beforeDir="false" afterPath="$PROJECT_DIR$/NcaabLineGetter.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,12 +22,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="20" />
-    <option name="y" value="43" />
-    <option name="width" value="1400" />
-    <option name="height" value="837" />
   </component>
   <component name="ProjectId" id="1VUwzX0qjTxEzMzJdFZfp7qXuZC" />
   <component name="ProjectViewState">
@@ -72,8 +69,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/5dimes.py</url>
-          <line>43</line>
+          <url>file://$PROJECT_DIR$/Dimes.py</url>
+          <line>36</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
