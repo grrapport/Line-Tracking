@@ -46,6 +46,7 @@ bovada_exception_string = ""
 
 bookmaker_consecutive_fail = 0
 bookmaker_exception_string = ""
+bookmaker_counter = 0
 try:
     while True:
         try:
@@ -55,6 +56,7 @@ try:
             bovada_exception_string = ""
         except Exception as e:
             bovada_consecutive_fail += 1
+            print(str(e))
             bovada_exception_string += "\n\n"+str(e)
             if bovada_consecutive_fail > 25:
                 bovada_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
@@ -63,12 +65,16 @@ try:
                 bovada_exception_string = ""
 
         try:
-            current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
-            update_lines_db(current_bookmaker_lines, conn)
-            bookmaker_consecutive_fail = 0
-            bookmaker_exception_string = ""
+            bookmaker_counter += 1
+            if bookmaker_counter % 5 == 0:
+                bookmaker_counter = 0
+                current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
+                update_lines_db(current_bookmaker_lines, conn)
+                bookmaker_consecutive_fail = 0
+                bookmaker_exception_string = ""
         except Exception as e:
             bookmaker_consecutive_fail += 1
+            print(str(e))
             bookmaker_exception_string += "\n\n"+str(e)
             if bookmaker_consecutive_fail > 25:
                 bookmaker_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
