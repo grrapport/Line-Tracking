@@ -1,6 +1,5 @@
 import Bookmaker
 import Bovada
-import Dimes
 import GameLines
 import NcaabSqlHandler
 import datetime
@@ -81,7 +80,7 @@ try:
                 send_email(bookmaker_exception_string)
                 bookmaker_consecutive_fail = 0
                 bookmaker_exception_string = ""
-        time.sleep(7)
+        time.sleep(5)
 except Exception as e:
     print(str(e))
     email_text = "Line Getter Service has stopped.\n"
