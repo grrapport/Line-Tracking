@@ -18,6 +18,8 @@ def get_teams_and_date(tr):
         return None
     date_string = teams_date[-1].strip()
     teams = teams_date[0].split(" at ")
+    if len(teams) < 2:
+        return None
     team1 = teams[0].strip()
     team2 = teams[1].strip()
     try:
@@ -78,6 +80,7 @@ for row in allTR:
 <tr class="\'LR" nonalt\'=""><!--<td rowspan=\'2\'>1/23/2020<br/>10:00 PM (EST)</td>--><td>665&nbsp;&nbsp;&nbsp;BYU</td><td>-6 <span class="US">-110</span><span class="\'EU\'">1.909</span></td><td><span class="US">-265</span><span class="\'EU\'">1.377</span></td><td>Over 136½ <span class="US">-110</span><span class="\'EU\'">1.909</span></td></tr>
 '''
 odds = get_odds_by_league(data)
+print(odds)
 for line in odds:
     print(line.output())
 
