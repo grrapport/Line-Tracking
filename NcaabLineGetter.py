@@ -66,7 +66,7 @@ try:
         try:
             bookmaker_counter += 1
             if bookmaker_counter % 5 == 0:
-                bookmaker_counter = 0
+                bookmaker_counter = 1
                 current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
                 update_lines_db(current_bookmaker_lines, conn)
                 bookmaker_consecutive_fail = 0
