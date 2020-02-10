@@ -18,7 +18,6 @@ user_agent = {
 
 first_url = "https://www.5dimes.eu/livelines/livelines.aspx"
 odds_url = "https://www.5dimes.eu/livelines/ajax/Player.LiveLines,LiveLines.ashx?_method=GetLinesForSport&_session=no"
-data = 'strID=l_39'
 
 
 def initialize():
@@ -35,7 +34,6 @@ def initialize():
         curr_id = sport.find("input").get("id").replace("/", "").strip()
         name = sport.find("a").contents[0].strip()
         dictionary_name = sport_cat+"-"+name
-        print(dictionary_name, curr_id)
         id_by_sport[dictionary_name] = curr_id
 
     return session, id_by_sport
@@ -44,6 +42,8 @@ def initialize():
 def get_teams_and_date(tr):
     row = tr.findChildren(recursive=False)[0].contents
     # getting the first element out of the contents, which is just the text
+    if len(row) == 0:
+        return None
     row = row[0]
     teams_date = row.split("-")
     if len(teams_date) < 2:
@@ -61,45 +61,64 @@ def get_teams_and_date(tr):
     return team1, team2, date_time
 
 
-def get_dict_sports_id(soup):
-    return None
-
-
 def get_odds_from_row(tr):
     # print(type(tr))
     return None
 
 
-def get_game_lines_by_league(league_id):
+def get_game_lines_by_league(session, league_id):
+    league_id = 'strID='+league_id
     dimes_response = str(session.post(odds_url, headers=user_agent, cookies=session.cookies, data=league_id).content, 'utf-8')
     dimes_response = dimes_response.replace("\\n", "").replace("\\r", "").replace("\\t", "").replace("\'", "").replace(
-        "\\", "")
-    # TODO: Replace 1/2 symbols with .5
+        "\\", "").replace("½", ".5")
     soup = bs4.BeautifulSoup(dimes_response, features="html.parser")
-    all_tr = soup.findAll("tr")
+    all_tr = soup.findAll("tr", {"class": "LHR"})
     lines = []
     current_line = None
     for tr in all_tr:
         temp_teams_date = get_teams_and_date(tr)
+        # we only want lines up to a certain future time. Not sure what to make this yet
+        if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=36):
+            break
         if temp_teams_date is not None:
+            temp_gt = temp_teams_date[2]
+            temp_t1 = temp_teams_date[0]
+            temp_t2 = temp_teams_date[1]
+            temp_tot = None
+            underline = None
+            overline = ""
+            temp_t1_ml = None
+            temp_t1_spr = None
+            temp_t1_spr_line = None
+            temp_t2_ml = None
+            temp_t2_spr = None
+            temp_t2_spr_line = None
+
             if current_line is not None:
                 lines.append(current_line)
                 current_line = None
-            if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=36):
-                break
-            current_line = GameLines.FullGameLine(temp_teams_date[2], datetime.datetime.now(), "5Dimes", None, None,
-                                                  None, temp_teams_date[0], None,
-                                                  None, None, temp_teams_date[1], None, None, None)
-        else:
-            if get_odds_from_row(tr) is None:
-                continue
-
-        # TODO: Loop over odds rows like below and add to the GameLines objects
+            next_row = tr.find_next("tr")
+            print(next_row)
+            current_line = GameLines.FullGameLine(temp_gt, datetime.datetime.now(), "5Dimes", None, None,
+                                                  None, temp_t1, None,
+                                                  None, None, temp_t2, None, None, None)
     return lines
 
 
-initialize()
-odds = get_game_lines_by_league(data)
-print(odds)
+def get_ncaab_full_game_lines():
+    full_game_lines = []
+    init_vals = initialize()
+    browse = init_vals[0]
+    sport_dict = init_vals[1]
+    if "Basketball-College" in sport_dict:
+        game_line = get_game_lines_by_league(browse, sport_dict["Basketball-College"])
+        full_game_lines.extend(game_line)
+    if "Basketball-College Extra" in sport_dict:
+        game_line = get_game_lines_by_league(browse, sport_dict["Basketball-College Extra"])
+        full_game_lines.extend(game_line)
+    return full_game_lines
+
+
+odds = get_ncaab_full_game_lines()
 for line in odds:
     print(line.output())
