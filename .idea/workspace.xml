@@ -61,17 +61,18 @@
       <screen x="0" y="23" width="1440" height="814" />
     </state>
     <state x="399" y="262" key="com.intellij.ide.util.TipDialog/0.23.1440.814@0.23.1440.814" timestamp="1579874888735" />
-    <state x="-1275" y="23" width="1275" height="889" key="dock-window-1" timestamp="1581299122359">
+    <state x="-1410" y="23" width="1275" height="889" key="dock-window-1" timestamp="1581391501553">
       <screen x="-1920" y="23" width="1920" height="1057" />
     </state>
-    <state x="-1275" y="23" width="1275" height="889" key="dock-window-1/0.23.1920.977/-1920.23.1920.1057@0.23.1920.977" timestamp="1581299122359" />
+    <state x="-1275" y="23" width="1275" height="889" key="dock-window-1/0.23.1920.977/-1920.23.1920.1057@0.23.1920.977" timestamp="1581379455841" />
+    <state x="-1410" y="23" width="1275" height="889" key="dock-window-1/0.23.1920.978/-1920.23.1920.1057@0.23.1920.978" timestamp="1581391501553" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/Dimes.py</url>
-          <line>36</line>
+          <line>38</line>
           <option name="timeStamp" value="1" />
         </line-breakpoint>
       </breakpoints>
