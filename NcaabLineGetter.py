@@ -17,11 +17,13 @@ def update_lines_db(lines, sql_conn):
         if line == match:
             continue
         if line != match:
-            print("Line changed! Will update entries in db and insert new one")
-            print("new line: " + line.output())
-            print("match in db: " + match.output())
-            sql_conn.update_games_to_old_line(line.game_time, line.book, line.team1, line.team2)
-            sql_conn.insert_latest_ncaab_full_game_line(line)
+            # checking to make sure the new line is not Null before marking all the other lines old
+            if not (line.total is None and line.team1_moneyline is None and line.team1_spread is None):
+                print("Line changed! Will update entries in db and insert new one")
+                print("new line: " + line.output())
+                print("match in db: " + match.output())
+                sql_conn.update_games_to_old_line(line.game_time, line.book, line.team1, line.team2)
+                sql_conn.insert_latest_ncaab_full_game_line(line)
             continue
 
 
