@@ -1,11 +1,11 @@
 import Bookmaker
 import Bovada
 import GameLines
+import Dimes
 import NcaabSqlHandler
 import datetime
 import time
 import smtplib
-import traceback
 
 
 def update_lines_db(lines, sql_conn):
@@ -26,25 +26,31 @@ def update_lines_db(lines, sql_conn):
             continue
 
 
-def send_email(email_text):
+def send_email(text):
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.connect('smtp.gmail.com', 587)
     server.ehlo()
     server.starttls()
     server.login("actionchase@gmail.com", "lnkyaliduvshwicn")
     try:
-        server.sendmail("actionchase@gmail.com", "grrapport@gmail.com", email_text)
+        server.sendmail("actionchase@gmail.com", "grrapport@gmail.com", text)
     except Exception as e:
         print(e)
 
 
 conn = NcaabSqlHandler.SqlHandler()
 
+# declaring variables for consecutive failures and error messages for each sportsbook
 bovada_consecutive_fail = 0
 bovada_exception_string = ""
 
 bookmaker_consecutive_fail = 0
 bookmaker_exception_string = ""
+bookmaker_counter = 0
+
+dimes_consecutive_fail = 0
+dimes_exception_string = ""
+
 try:
     while True:
         try:
@@ -54,23 +60,48 @@ try:
             bovada_exception_string = ""
         except Exception as e:
             bovada_consecutive_fail += 1
+            print(str(e))
             bovada_exception_string += "\n\n"+str(e)
-            if bovada_consecutive_fail > 15:
-                bovada_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
+            if bovada_consecutive_fail > 25:
+                bovada_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
                 send_email(bovada_exception_string)
+                bovada_consecutive_fail = 0
+                bovada_exception_string = ""
 
         try:
-            current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
-            update_lines_db(current_bookmaker_lines, conn)
-            bookmaker_consecutive_fail = 0
-            bookmaker_exception_string = ""
+            bookmaker_counter += 1
+            if bookmaker_counter % 5 == 0:
+                bookmaker_counter = 1
+                current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
+                update_lines_db(current_bookmaker_lines, conn)
+                bookmaker_consecutive_fail = 0
+                bookmaker_exception_string = ""
         except Exception as e:
             bookmaker_consecutive_fail += 1
+            print(str(e))
             bookmaker_exception_string += "\n\n"+str(e)
-            if bookmaker_consecutive_fail > 15:
-                bookmaker_exception_string = "More than 15 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
+            if bookmaker_consecutive_fail > 25:
+                bookmaker_exception_string = "More than 25 consecutive failures have occured for Bookmaker. Exception text below \n\n "+bovada_exception_string
                 send_email(bookmaker_exception_string)
-        time.sleep(10)
+                bookmaker_consecutive_fail = 0
+                bookmaker_exception_string = ""
+
+        try:
+            current_dimes_lines = Dimes.get_ncaab_full_game_lines()
+            update_lines_db(current_dimes_lines, conn)
+            dimes_consecutive_fail = 0
+            dimes_exception_string = ""
+        except Exception as e:
+            dimes_consecutive_fail += 1
+            print(str(e))
+            dimes_exception_string += "\n\n"+str(e)
+            if dimes_consecutive_fail > 5:
+                dimes_exception_string = "More than 25 consecutive failures have occured for 5Dimes. Exception text below \n\n "+dimes_exception_string
+                send_email(dimes_exception_string)
+                dimes_consecutive_fail = 0
+                dimes_exception_string = ""
+
+        time.sleep(5)
 except Exception as e:
     print(str(e))
     email_text = "Line Getter Service has stopped.\n"

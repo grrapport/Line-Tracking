@@ -7,8 +7,8 @@ class FullGameLine:
             self.game_time = gtime
             self.line_time = ltime
             self.book = bookmaker.strip()
-            self.team1 = t1.strip()
-            self.team2 = t2.strip()
+            self.team1 = clean_team_name(t1).strip()
+            self.team2 = clean_team_name(t2).strip()
             try:
                 self.total = float(tot)
                 self.under_line = int(underline)
@@ -79,4 +79,13 @@ class FullGameLine:
         return outstring
 
 
+def clean_team_name(name):
+    clean = ""
+    parts = name.split(" ")
+    if parts[len(parts)-1].startswith("(#"):
+        parts.pop()
+        clean = "".join(parts)
+    else:
+        clean = name
+    return clean
 

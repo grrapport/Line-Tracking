@@ -20,6 +20,8 @@ class SqlHandler:
                                         " Newest) "
                                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
                                         )
+        if line.total is None and line.team1_moneyline is None and line.team1_spread is None:
+            return
         data = (
             line.game_time,
             line.line_time,
