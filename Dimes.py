@@ -194,9 +194,3 @@ def get_ncaab_full_game_lines():
         game_line = get_game_lines_by_league(browse, sport_dict["Basketball-College Extra"])
         full_game_lines.extend(game_line)
     return full_game_lines
-
-
-odds = get_ncaab_full_game_lines()
-for line in odds:
-    print(line.output())
-

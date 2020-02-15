@@ -12,7 +12,6 @@ def update_lines_db(lines, sql_conn):
     for line in lines:
         match = sql_conn.select_latest_ncaa_line(line.game_time, line.book, line.team1, line.team2)
         if match is None:
-            print("No match found, will insert new line")
             sql_conn.insert_latest_ncaab_full_game_line(line)
             continue
         if line == match:
