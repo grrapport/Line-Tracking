@@ -28,7 +28,7 @@ def initialize():
     first_page_response = first_page_response.replace("\\n", "").replace("\\r", "").replace("\\t", "").replace("\'", "").replace(
         "\\", "")
     id_by_sport = dict()
-    init_soup = bs4.BeautifulSoup(first_page_response, features="html.parser")
+    init_soup = bs4.BeautifulSoup(first_page_response, features="html5lib")
     sports = init_soup.findAll("span", {"class": "Group SportSubType"})
     for sport in sports:
         # to get the overarching sport, we need to look above at the most recent div with class "Sport"
@@ -63,32 +63,28 @@ def get_teams_and_date(tr):
     return team1, team2, date_time
 
 
-def get_odds_from_row(tr):
-    # print(type(tr))
-    return None
-
-
 def get_game_lines_by_league(session, league_id):
     league_id = 'strID='+league_id
     dimes_response = str(session.post(odds_url, headers=user_agent, cookies=session.cookies, data=league_id).content, 'utf-8')
     dimes_response = unquote(dimes_response)
-    dimes_response = dimes_response.replace("\\n", "").replace("\\r", "").replace("\\t", "").replace("\'", "").replace(
-        "\\", "").replace("\xa0", " ")
-    soup = bs4.BeautifulSoup(dimes_response, features="html.parser")
+    dimes_response = dimes_response.replace("\\n", "\n").replace("\\r", "").replace("\\t", "  ").replace("\'", "").replace(
+        "\\", "").replace("\xa0", " ").replace("&nbsp;", " ")
+    # print(dimes_response)
+    soup = bs4.BeautifulSoup(dimes_response, features="html5lib")
     all_tr = soup.findAll("tr", {"class": "LHR"})
     lines = []
     for tr in all_tr:
         temp_teams_date = get_teams_and_date(tr)
         # we only want lines up to a certain future time. Not sure what to make this yet
         if temp_teams_date is not None:
-            if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=36):
+            if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=2):
                 break
             temp_gt = temp_teams_date[2]
             temp_t1 = temp_teams_date[0]
             temp_t2 = temp_teams_date[1]
             temp_tot = None
             underline = None
-            overline = ""
+            overline = None
             temp_t1_ml = None
             temp_t1_spr = None
             temp_t1_spr_line = None
@@ -96,45 +92,86 @@ def get_game_lines_by_league(session, league_id):
             temp_t2_spr = None
             temp_t2_spr_line = None
 
-            next_row = tr.find_next("tr")
+            next_row = tr
 
             # If a row contains either team name, is hidden  (there are a bunch hidden)
             # or the class is LHR (which is used for titles and also blank lines, we keep going
-            while temp_t1 in str(next_row) or temp_t2 in str(next_row) or "hidden" in str(next_row) or next_row["class"][0] == "LHR":
-                if ("hidden" in str(next_row) or next_row["class"][0] == "LHR") and True: # add something to check for odds classes, just in case
+            while next_row is not None and (temp_t1 in str(next_row) or temp_t2 in str(next_row) or "hidden" in str(next_row) or next_row["class"][0] == "LHR"):
+                if next_row is None:
+                    break
+                if "hidden" in str(next_row) or next_row["class"][0] == "LHR": # add something to check for odds classes, just in case
                     next_row = next_row.find_next("tr")
                     continue
                 row_parts = next_row.findAll("td")
+                # row_parts = next_row.findChildren(recursive=False)
+                #print(row_parts)
+                if len(row_parts) < 4:
+                    continue
 
                 # next code block gets the spread from this row
                 spread_div = row_parts[1]
                 # checking to see if any rows don't have a spread at all by checking to see if the price is listed
-                # TODO: check of alternate lines by looking for prices that are not -110
                 if len(spread_div.find_next("span", {"class": "US"}).contents) > 0:
                     spread_str = spread_div.contents[0].replace("½", ".5")
-                    print(spread_str)
-                    print(spread_div.find_next("span", {"class": "US"}).contents)
                     spread_juice = int(spread_div.find_next("span", {"class": "US"}).contents[0])
-                    if spread_str is None or spread_str == " ":
-                        spread = None
-                    else:
-                        if "pk" in spread_str:
-                            spread = 0.0
+                    # 5Dimes does not juice their CBB spreads or totals, but they offer a ton of alt lines
+                    # We only want the actual market lines at -110, so we only use them if they are -110
+                    if spread_juice == -110:
+                        if spread_str is None or spread_str == " ":
+                            spread = None
                         else:
-                            spread = float(spread_str)
-                    if temp_t1 in str(row_parts[0]):
-                        temp_t1_spr = spread
-                        temp_t1_spr_line = spread_juice
-                    if temp_t2 in str(row_parts[0]):
-                        temp_t2_spr = spread
-                        temp_t2_spr_line = spread_juice
+                            if "pk" in spread_str:
+                                spread = 0.0
+                            else:
+                                spread = float(spread_str)
+                        if temp_t1 in str(row_parts[0]):
+                            temp_t1_spr = spread
+                            temp_t1_spr_line = spread_juice
+                        if temp_t2 in str(row_parts[0]):
+                            temp_t2_spr = spread
+                            temp_t2_spr_line = spread_juice
 
+                # next code block gets the moneyline from this row
+                moneyline_div = row_parts[2]
+                if len(moneyline_div.find_next("span", {"class": "US"}).contents) > 0:
+                    ml = int(moneyline_div.find_next("span", {"class": "US"}).contents[0])
+                    if temp_t1 in str(row_parts[0]):
+                        temp_t1_ml = ml
+                    if temp_t2 in str(row_parts[0]):
+                        temp_t2_ml = ml
+
+                # next code block gets the total and total juice
+                total_div = row_parts[3]
+                # checking to see if any rows don't have a total at all by checking to see if the price is listed
+                if len(total_div.find_next("span", {"class": "US"}).contents) > 0:
+                    total_str = total_div.contents[0].replace("½", ".5")
+                    total_juice = int(total_div.find_next("span", {"class": "US"}).contents[0])
+                    # 5Dimes does not juice their CBB spreads or totals, but they offer a ton of alt lines
+                    # We only want the actual market lines at -110, so we only use them if they are -110
+                    if total_juice == -110:
+                        if "Under" in total_str:
+                            try:
+                                total = float(total_str.split(" ")[1])
+                            except:
+                                total = None
+                            if temp_tot is None:
+                                temp_tot = total
+                            if temp_tot is not None:
+                                underline = total_juice
+                        if "Over" in total_str:
+                            try:
+                                total = float(total_str.split(" ")[1])
+                            except:
+                                total = None
+                            if temp_tot is None:
+                                temp_tot = total
+                            if temp_tot is not None:
+                                overline = total_juice
+                
                 next_row = next_row.find_next("tr")
-            print("\n\n\tthis row broke the loop for "+temp_t1+" and "+temp_t2)
-            print(str(next_row)+"\n\n")
-            current_line = GameLines.FullGameLine(temp_gt, datetime.datetime.now(), "5Dimes", None, None,
-                                                  None, temp_t1, None,
-                                                  temp_t1_spr, temp_t1_spr_line, temp_t2, None,
+            current_line = GameLines.FullGameLine(temp_gt, datetime.datetime.now(), "5Dimes", temp_tot, underline,
+                                                  overline, temp_t1, temp_t1_ml,
+                                                  temp_t1_spr, temp_t1_spr_line, temp_t2, temp_t2_ml,
                                                   temp_t2_spr, temp_t2_spr_line)
             lines.append(current_line)
     return lines
