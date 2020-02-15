@@ -81,7 +81,7 @@ def get_game_lines_by_league(session, league_id):
         temp_teams_date = get_teams_and_date(tr)
         # we only want lines up to a certain future time. Not sure what to make this yet
         if temp_teams_date is not None:
-            if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=2):
+            if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=48):
                 break
             temp_gt = temp_teams_date[2]
             temp_t1 = temp_teams_date[0]
