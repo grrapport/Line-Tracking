@@ -81,11 +81,16 @@ class FullGameLine:
 
 def clean_team_name(name):
     clean = ""
+    # adding a bunch of replaces to clean up these team names after seeing some problems with Bovada
+    name = name.replace("\\n", "").replace("\\r", "").replace("\\t", "").replace("\'", "").replace(
+                        "\xa0", "").replace("&nbsp;", " ").replace("\\", "")
+
     parts = name.split(" ")
+    # this removes the ranking from Bovada team names. Caused us a lot of pain in the past :(
     if parts[len(parts)-1].startswith("(#"):
         parts.pop()
-        clean = "".join(parts)
+        clean = "".join(parts).strip()
     else:
-        clean = name
+        clean = name.strip()
     return clean
 
