@@ -23,6 +23,7 @@ odds_url = "https://www.5dimes.eu/livelines/ajax/Player.LiveLines,LiveLines.ashx
 
 
 def initialize():
+    # opens a session with the site, and then gets the correct links to all the sports by id
     session = requests.session()
     first_page_response = str(session.get(first_url, headers=user_agent).content, 'utf-8')
     first_page_response = first_page_response.replace("\\n", "").replace("\\r", "").replace("\\t", "").replace("\'", "").replace(
@@ -42,6 +43,7 @@ def initialize():
 
 
 def get_teams_and_date(tr):
+    # bs4 row is passed, date and teams are returned if they can be parsed out. Otherwise, None is returned
     row = tr.findChildren(recursive=False)[0].contents
     # getting the first element out of the contents, which is just the text
     if len(row) == 0:
@@ -54,8 +56,8 @@ def get_teams_and_date(tr):
     teams = teams_date[0].split(" at ")
     if len(teams) < 2:
         return None
-    team1 = teams[0].strip()
-    team2 = teams[1].strip()
+    team2 = teams[0].strip()
+    team1 = teams[1].strip()
     try:
         date_time = datetime.datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p")
     except:
@@ -64,6 +66,8 @@ def get_teams_and_date(tr):
 
 
 def get_game_lines_by_league(session, league_id):
+    # takes a valid session obj for web requests and the id of the league to parse
+    # returns list of GameLine objects with relevant information
     league_id = 'strID='+league_id
     dimes_response = str(session.post(odds_url, headers=user_agent, cookies=session.cookies, data=league_id).content, 'utf-8')
     dimes_response = unquote(dimes_response)
@@ -167,7 +171,7 @@ def get_game_lines_by_league(session, league_id):
                                 temp_tot = total
                             if temp_tot is not None:
                                 overline = total_juice
-                
+
                 next_row = next_row.find_next("tr")
             current_line = GameLines.FullGameLine(temp_gt, datetime.datetime.now(), "5Dimes", temp_tot, underline,
                                                   overline, temp_t1, temp_t1_ml,
@@ -178,6 +182,7 @@ def get_game_lines_by_league(session, league_id):
 
 
 def get_ncaab_full_game_lines():
+    # gets lines for college basketball and extra games
     full_game_lines = []
     init_vals = initialize()
     browse = init_vals[0]

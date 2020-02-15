@@ -1,11 +1,11 @@
 import Bookmaker
 import Bovada
 import GameLines
+import Dimes
 import NcaabSqlHandler
 import datetime
 import time
 import smtplib
-import traceback
 
 
 def update_lines_db(lines, sql_conn):
@@ -40,12 +40,17 @@ def send_email(text):
 
 conn = NcaabSqlHandler.SqlHandler()
 
+# declaring variables for consecutive failures and error messages for each sportsbook
 bovada_consecutive_fail = 0
 bovada_exception_string = ""
 
 bookmaker_consecutive_fail = 0
 bookmaker_exception_string = ""
 bookmaker_counter = 0
+
+dimes_consecutive_fail = 0
+dimes_exception_string = ""
+
 try:
     while True:
         try:
@@ -76,10 +81,26 @@ try:
             print(str(e))
             bookmaker_exception_string += "\n\n"+str(e)
             if bookmaker_consecutive_fail > 25:
-                bookmaker_exception_string = "More than 25 consecutive failures have occured for Bovada. Exception text below \n\n "+bovada_exception_string
+                bookmaker_exception_string = "More than 25 consecutive failures have occured for Bookmaker. Exception text below \n\n "+bovada_exception_string
                 send_email(bookmaker_exception_string)
                 bookmaker_consecutive_fail = 0
                 bookmaker_exception_string = ""
+
+        try:
+            current_dimes_lines = Dimes.get_ncaab_full_game_lines()
+            update_lines_db(current_dimes_lines, conn)
+            dimes_consecutive_fail = 0
+            dimes_exception_string = ""
+        except Exception as e:
+            dimes_consecutive_fail += 1
+            print(str(e))
+            dimes_exception_string += "\n\n"+str(e)
+            if dimes_consecutive_fail > 5:
+                dimes_exception_string = "More than 25 consecutive failures have occured for 5Dimes. Exception text below \n\n "+dimes_exception_string
+                send_email(dimes_exception_string)
+                dimes_consecutive_fail = 0
+                dimes_exception_string = ""
+
         time.sleep(5)
 except Exception as e:
     print(str(e))
