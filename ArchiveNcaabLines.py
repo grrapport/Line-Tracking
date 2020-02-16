@@ -5,11 +5,13 @@ import time
 
 
 def get_all_lines_older_than_7_days(sql):
-    week_ago = datetime.datetime.now() + datetime.timedelta(days=7)
+    week_ago = datetime.datetime.now() - datetime.timedelta(days=7)
     print(week_ago.strftime('%Y-%m-%d %H:%M:%S'))
     return sql.select_old_available_ncaab_full_game_lines(week_ago)
 
 
+# this works but you need to manually delete the rows.
+# Use this instead of an insert from select because this will further clean the names
 sql_conn = NcaabSqlHandler.SqlHandler()
 old_lines = get_all_lines_older_than_7_days(sql_conn)
 time.sleep(10)
