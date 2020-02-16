@@ -39,6 +39,7 @@ def send_email(text):
         print(e)
 
 
+print("Starting NCAAB Line Getter Service")
 conn = NcaabSqlHandler.SqlHandler()
 
 # declaring variables for consecutive failures and error messages for each sportsbook
