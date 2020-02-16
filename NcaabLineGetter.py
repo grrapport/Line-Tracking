@@ -71,7 +71,7 @@ try:
 
         try:
             bookmaker_counter += 1
-            if bookmaker_counter % 5 == 0:
+            if bookmaker_counter % 2 == 0:
                 bookmaker_counter = 1
                 current_bookmaker_lines = Bookmaker.get_ncaab_full_game_lines()
                 update_lines_db(current_bookmaker_lines, conn)
@@ -102,7 +102,7 @@ try:
                 dimes_consecutive_fail = 0
                 dimes_exception_string = ""
 
-        time.sleep(5)
+        time.sleep(10)
 except Exception as e:
     print(str(e))
     email_text = "Line Getter Service has stopped.\n"

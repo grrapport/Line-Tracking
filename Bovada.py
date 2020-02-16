@@ -6,6 +6,7 @@ import json
 
 user_agent = {'User-Agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/76.0.3809.100 Safari/537.36'}
 # TODO: Find a way to account for time changes. Daylight Savings sucks
+# TODO: fix headers to really look legit. they're gonna send us to Sinkhole city soon
 
 
 def convert_json_feed_to_line_object(dict):

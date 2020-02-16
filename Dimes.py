@@ -193,4 +193,5 @@ def get_ncaab_full_game_lines():
     if "Basketball-College Extra" in sport_dict:
         game_line = get_game_lines_by_league(browse, sport_dict["Basketball-College Extra"])
         full_game_lines.extend(game_line)
+    browse.close()
     return full_game_lines
