@@ -97,6 +97,48 @@ class SqlHandler:
         self.cursor.execute(update_latest_column,  (team1, team1, team2, team2,
                                                     gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
 
+    def select_old_available_ncaab_full_game_lines(self, dt):
+        now = dt.strftime('%Y-%m-%d %H:%M:%S')
+        ret = []
+        select_all_full_game_ncaab_query = "SELECT * FROM NCAAB_Full_Game_Lines WHERE GameTime < %s"
+        self.cursor.execute(select_all_full_game_ncaab_query, (now, ))
+        result = self.cursor.fetchall()
+        for temp in result:
+            new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[7], temp[6], temp[3], temp[8],
+                                              temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
+            ret.append(new_line)
+        return ret
+
+    def insert_archive_ncaab_full_game_line(self, line):
+        insert_ncaab_full_game_query = ("INSERT INTO NCAAB_Full_Game_Lines_Archive "
+                                        "(GameTime, LineTime, Bookmaker, Team1, Team2, Total, OverLine, UnderLine,"
+                                        " T1Moneyline, T1Spread, T1SpreadLine, T2Moneyline, T2Spread, T2SpreadLine,"
+                                        " Newest) "
+                                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                                        )
+        if line.total is None and line.team1_moneyline is None and line.team1_spread is None:
+            return
+        data = (
+            line.game_time,
+            line.line_time,
+            line.book,
+            line.team1,
+            line.team2,
+            line.total,
+            line.over_line,
+            line.under_line,
+            line.team1_moneyline,
+            line.team1_spread,
+            line.team1_spread_line,
+            line.team2_moneyline,
+            line.team2_spread,
+            line.team2_spread_line,
+            False
+        )
+        print(data)
+        self.cursor.execute(insert_ncaab_full_game_query, data)
+        self.mydb.commit()
+
     def close(self):
         self.cursor.close()
         self.mydb.close()
