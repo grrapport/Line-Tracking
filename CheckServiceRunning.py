@@ -13,7 +13,7 @@ def send_email(text):
     try:
         server.sendmail("actionchase@gmail.com", "grrapport@gmail.com", text)
     except Exception as e:
-        print(e)
+        print(str(e))
 
 
 def kill_and_restart_service():
@@ -26,17 +26,14 @@ def kill_and_restart_service():
 
     # get the end of the log file
     p = subprocess.Popen(["tail", "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
-    print("Getting end of log file")
     end_log = str(p.communicate()[0], 'utf-8')
 
     # kill the process
     if process_id is not None and process_id != 0:
         subprocess.call(["kill", str(process_id)])
-        print("Killing stale process")
 
     # delete the log file for cleanup
     subprocess.call(["rm", "/home/grrapport/workspace/ncaab_lines.log"])
-    print("Deleting old log file")
 
     # restart the process
     subprocess.Popen(["nohup", "python3", "/home/grrapport/workspace/Line-Tracking/NcaabLineGetter.py",
@@ -52,7 +49,6 @@ def kill_and_restart_service():
     # compose email with info of service restart
     email_str = "NCAAB Line Getter Service Restarted"
     email_str += "\n\n End of log: \n" + end_log
-    print(email_str)
     send_email(email_str)
 
 
@@ -61,12 +57,10 @@ try:
     p = subprocess.Popen(["stat", "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
     logfile_stat = str(p.communicate()[0], 'utf-8').splitlines()
     for prop in logfile_stat:
-        print(prop)
         if "Modify" in prop:
             parts = prop.replace("Modify:", "")
             date_part = parts.split(" +")
             date_spec_part = date_part[0].strip()
-            date_spec_part = "2020-02-26 03:35:46.443139896"
             date_string = date_spec_part.split(".")[0]
             last_modified = datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
             break
