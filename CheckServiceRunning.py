@@ -20,6 +20,7 @@ def kill_and_restart_service():
     # get list of processes and finds process id for the running script NcaabLineGetter.py
     p = subprocess.Popen(["ps", "aux"], stdout=subprocess.PIPE)
     process_string = str(p.communicate()[0], 'utf-8').splitlines()
+    process_id = None
     for proc in process_string:
         if "NcaabLineGetter.py" in proc:
             process_id = int(proc.split(" ")[1])
@@ -29,7 +30,7 @@ def kill_and_restart_service():
     end_log = str(p.communicate()[0], 'utf-8')
 
     # kill the process
-    if process_id is not None and process_id != 0:
+    if process_id is not None:
         subprocess.call(["kill", str(process_id)])
 
     # delete the log file for cleanup
