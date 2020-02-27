@@ -57,6 +57,7 @@ try:
     # get last modified time of log file, and check to see how long it has been
     p = subprocess.Popen(["stat", "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
     logfile_stat = str(p.communicate()[0], 'utf-8').splitlines()
+    last_modified = None
     for prop in logfile_stat:
         if "Modify" in prop:
             parts = prop.replace("Modify:", "")
@@ -66,7 +67,7 @@ try:
             last_modified = datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
             break
 
-    if last_modified < datetime.datetime.now() - datetime.timedelta(minutes=6):
+    if last_modified < datetime.datetime.now() - datetime.timedelta(minutes=6) or last_modified is None:
         kill_and_restart_service()
 except Exception as e:
     fail_email = "Service restarter has failed with the following exception: \n\n"
