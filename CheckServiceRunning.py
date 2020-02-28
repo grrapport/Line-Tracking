@@ -23,7 +23,11 @@ def kill_and_restart_service():
     process_id = None
     for proc in process_string:
         if "NcaabLineGetter.py" in proc:
-            process_id = int(proc.split(" ")[1])
+            try:
+                process_id = int(proc.split(" ")[1])
+                break
+            except:
+                break
 
     # get the end of the log file
     p = subprocess.Popen(["tail", "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
