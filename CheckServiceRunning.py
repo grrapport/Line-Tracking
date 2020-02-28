@@ -30,7 +30,7 @@ def kill_and_restart_service():
                 break
 
     # get the end of the log file
-    p = subprocess.Popen(["tail", "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
+    p = subprocess.Popen(["tail", "-n", "100" "/home/grrapport/workspace/ncaab_lines.log"], stdout=subprocess.PIPE)
     end_log = str(p.communicate()[0], 'utf-8')
 
     # kill the process
