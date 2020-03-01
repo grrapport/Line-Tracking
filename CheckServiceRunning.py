@@ -71,7 +71,7 @@ try:
             last_modified = datetime.datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
             break
 
-    if last_modified is None or last_modified < datetime.datetime.now() - datetime.timedelta(minutes=6):
+    if last_modified is None or last_modified < datetime.datetime.now() - datetime.timedelta(minutes=15):
         kill_and_restart_service()
 except Exception as e:
     fail_email = "Service restarter has failed with the following exception: \n\n"

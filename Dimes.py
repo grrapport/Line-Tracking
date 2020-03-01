@@ -59,7 +59,8 @@ def get_teams_and_date(tr):
     team2 = teams[0].strip()
     team1 = teams[1].strip()
     try:
-        date_time = datetime.datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p")
+        # adding 5 hours because it defaults to eastern time, we are putting in UTC
+        date_time = datetime.datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p") + datetime.timedelta(hours=5)
     except:
         return None
     return team1, team2, date_time
@@ -81,6 +82,11 @@ def get_game_lines_by_league(session, league_id):
         temp_teams_date = get_teams_and_date(tr)
         # we only want lines up to a certain future time. Not sure what to make this yet
         if temp_teams_date is not None:
+            if datetime.datetime.now() - datetime.timedelta(minutes=15) > temp_teams_date[2]:
+                # if it's more than 15 minutes after game time, we don't want lines anymore
+                # we were getting a lot of second half lines, which they post with the same format.
+                # if we want second halves, we can add them by basically doing the opposite of this  later
+                continue
             if temp_teams_date[2] > datetime.datetime.now() + datetime.timedelta(hours=48):
                 break
             temp_gt = temp_teams_date[2]
@@ -173,6 +179,9 @@ def get_game_lines_by_league(session, league_id):
                                 overline = total_juice
 
                 next_row = next_row.find_next("tr")
+            if temp_tot is not None and temp_tot < 90:
+                # another thing to stop half lines from getting in the mix
+                continue
             current_line = GameLines.FullGameLine(temp_gt, datetime.datetime.now(), "5Dimes", temp_tot, underline,
                                                   overline, temp_t1, temp_t1_ml,
                                                   temp_t1_spr, temp_t1_spr_line, temp_t2, temp_t2_ml,
@@ -195,3 +204,9 @@ def get_ncaab_full_game_lines():
         full_game_lines.extend(game_line)
     browse.close()
     return full_game_lines
+
+
+liens = get_ncaab_full_game_lines()
+for lien in liens:
+    print(lien.output())
+
