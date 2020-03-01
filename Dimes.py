@@ -206,7 +206,3 @@ def get_ncaab_full_game_lines():
     return full_game_lines
 
 
-liens = get_ncaab_full_game_lines()
-for lien in liens:
-    print(lien.output())
-
