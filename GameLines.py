@@ -48,14 +48,9 @@ class FullGameLine:
         game_id_bool = self.game_id == other.game_id
         tot_bool = self.total == other.total
         tot_line_bool = self.under_line == other.under_line and self.over_line == other.over_line
-        print(self.team1_spread, other.team1_spread)
-        print(self.team2_spread, other.team2_spread)
-        print(self.team1_moneyline, other.team1_moneyline)
-        print(self.team2_moneyline, other.team2_moneyline)
         t1spread_bool = self.team1_spread == other.team1_spread and self.team1_spread_line == other.team1_spread_line
         t2spread_bool = self.team2_spread == other.team2_spread and self.team2_spread_line == other.team2_spread_line
         moneyline_bool = self.team1_moneyline == other.team1_moneyline and self.team2_moneyline == other.team2_moneyline
-        print(game_id_bool, tot_bool, tot_line_bool, t1spread_bool, t2spread_bool, moneyline_bool)
         return game_id_bool and tot_bool and tot_line_bool and t1spread_bool and t2spread_bool and moneyline_bool
 
     def is_same_game(self, other):
