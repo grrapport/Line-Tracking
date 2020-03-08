@@ -207,7 +207,9 @@ def get_ncaab_full_game_lines():
     return full_game_lines
 
 
+'''
 lines = get_ncaab_full_game_lines()
 for line in lines:
     print(line.output())
+'''
 
