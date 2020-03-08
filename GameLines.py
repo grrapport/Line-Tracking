@@ -49,10 +49,20 @@ class FullGameLine:
         tot_bool = self.total == other.total
         tot_line_bool = self.under_line == other.under_line and self.over_line == other.over_line
         if self.team1_id == other.team1_id:
+            print("team1 ids are the same")
+            print(self.team1_spread, other.team1_spread)
+            print(self.team2_spread, other.team2_spread)
+            print(self.team1_moneyline, other.team1_moneyline)
+            print(self.team2_moneyline, other.team2_moneyline)
             t1spread_bool = self.team1_spread == other.team1_spread and self.team1_spread_line == other.team1_spread_line
             t2spread_bool = self.team2_spread == other.team2_spread and self.team2_spread_line == other.team2_spread_line
             moneyline_bool = self.team1_moneyline == other.team1_moneyline and self.team2_moneyline == other.team2_moneyline
         else:
+            print("team1 ids are not the same")
+            print(self.team1_spread, other.team1_spread)
+            print(self.team2_spread, other.team2_spread)
+            print(self.team1_moneyline, other.team1_moneyline)
+            print(self.team2_moneyline, other.team2_moneyline)
             t1spread_bool = self.team1_spread == other.team2_spread and self.team1_spread_line == other.team2_spread_line
             t2spread_bool = self.team2_spread == other.team1_spread and self.team2_spread_line == other.team1_spread_line
             moneyline_bool = self.team1_moneyline == other.team2_moneyline and self.team2_moneyline == other.team1_moneyline
