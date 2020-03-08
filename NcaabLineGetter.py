@@ -16,7 +16,7 @@ def update_lines_db(lines, sql_conn):
         match = sql_conn.select_latest_ncaab_line_id(line.game_id, line.book_id)
         if match is None:
             if not (line.total is None and line.team1_moneyline is None and line.team1_spread is None):
-                sql_conn.insert_latest_ncaab_full_game_line(line)
+                sql_conn.insert_ncaab_full_game_line_id(line)
             continue
         if line == match:
             continue
