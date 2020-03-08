@@ -43,7 +43,36 @@ class SqlHandler:
         self.cursor.execute(insert_ncaab_full_game_query, data)
         self.mydb.commit()
 
-    def select_latest_ncaa_line(self, gametime, bookmaker, team1, team2):
+    def insert_ncaab_full_game_line_id(self, line):
+        insert_ncaab_full_game_query = ("INSERT INTO NCAAB_Full_Game_Lines_IDs "
+                                        "(GameID, BookID, LineTime,"
+                                        " Total, OverLine, UnderLine,"
+                                        " T1Moneyline, T1Spread, T1SpreadLine, T2Moneyline, T2Spread, T2SpreadLine,"
+                                        " Newest) "
+                                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                                        )
+        if line.total is None and line.team1_moneyline is None and line.team1_spread is None:
+            return
+        data = (
+            line.game_id,
+            line.book_id,
+            line.line_time,
+            line.total,
+            line.over_line,
+            line.under_line,
+            line.team1_moneyline,
+            line.team1_spread,
+            line.team1_spread_line,
+            line.team2_moneyline,
+            line.team2_spread,
+            line.team2_spread_line,
+            True
+        )
+        print(data)
+        self.cursor.execute(insert_ncaab_full_game_query, data)
+        self.mydb.commit()
+
+    def select_latest_ncaab_line(self, gametime, bookmaker, team1, team2):
         new_line = None
         select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Full_Game_Lines WHERE "
                                                "(Team1 = %s or Team2 = %s) AND "
@@ -59,6 +88,25 @@ class SqlHandler:
         for temp in result:
             new_line = GameLines.FullGameLine(temp[0], temp[1], temp[2], temp[5], temp[7], temp[6], temp[3], temp[8],
                                               temp[9], temp[10], temp[4], temp[11], temp[12], temp[13])
+            break
+        return new_line
+
+    def select_latest_ncaab_line_id(self, gameid, bookid):
+        new_line = None
+        select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Full_Game_Lines_IDs WHERE "
+                                               "GameID = %s AND "
+                                               "BookID = %s"
+                                               "order by LineTime desc "
+                                               "Limit 1"
+                                               )
+        self.cursor.execute(select_latest_full_game_ncaab_query, (gameid, bookid))
+        result = self.cursor.fetchall()
+        for temp in result:
+            new_line = GameLines.FullGameLine(None, temp[2], None, temp[3], temp[5], temp[4],
+                                              None, temp[6], temp[7], temp[8], None, temp[9], temp[10], temp[11])
+            new_line.game_id = temp[0]
+            new_line.book_id = temp[1]
+            new_line.latest = True
             break
         return new_line
 
@@ -86,7 +134,7 @@ class SqlHandler:
             ret.append(new_line)
         return ret
 
-    def update_games_to_old_line(self, gametime, bookmaker, team1, team2):
+    """def update_games_to_old_line(self, gametime, bookmaker, team1, team2):
         update_latest_column = ("UPDATE NCAAB_Full_Game_Lines "
                                 "SET Newest = 0 "
                                 "WHERE (Team1 = %s or Team2 = %s) AND "
@@ -96,6 +144,7 @@ class SqlHandler:
                                 )
         self.cursor.execute(update_latest_column,  (team1, team1, team2, team2,
                                                     gametime.strftime('%Y-%m-%d %H:%M:%S'), bookmaker))
+    """
 
     def select_old_available_ncaab_full_game_lines(self, dt):
         now = dt.strftime('%Y-%m-%d %H:%M:%S')
@@ -138,6 +187,24 @@ class SqlHandler:
         print(data)
         self.cursor.execute(insert_ncaab_full_game_query, data)
         self.mydb.commit()
+
+    def get_all_names_id_mappings(self):
+        select_all_names_query = "select * from NCAAB_Team_ID_Mapping"
+        self.cursor.execute(select_all_names_query)
+        result = self.cursor.fetchall()
+        ret = dict()
+        for temp in result:
+            ret[temp[1]] = temp[0]
+        return ret
+
+    def get_all_bookmaker_ids_(self):
+        select_all_names_query = "select ID,Name from Bookmaker_IDs"
+        self.cursor.execute(select_all_names_query)
+        result = self.cursor.fetchall()
+        ret = dict()
+        for temp in result:
+            ret[temp[1]] = temp[0]
+        return ret
 
     def close(self):
         self.cursor.close()
