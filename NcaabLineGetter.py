@@ -26,7 +26,7 @@ def update_lines_db(lines, sql_conn):
                 print("Line changed! Will update entries in db and insert new one")
                 print("new line: " + line.output())
                 print("match in db: " + match.output())
-                sql_conn.insert_latest_ncaab_full_game_line(line)
+                sql_conn.insert_ncaab_full_game_line_id(line)
             continue
 
 
