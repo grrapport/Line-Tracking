@@ -82,6 +82,10 @@ class FullGameLine:
         self.team2_spread_line = temp_team1_spreadline
 
     def output(self):
+        if self.game_time is None:
+            gt_str = "not found"
+        else:
+            gt_str = self.game_time.strftime('%Y-%m-%d %H:%M:%S')
         outstring = """
                     {}
                     Team 1: {}         Team 2: {}
@@ -89,7 +93,7 @@ class FullGameLine:
                     {} {}              {} {}
                     O/U: {}
                     Over:{}             Under: {}
-                    """.format(self.game_time.strftime('%Y-%m-%d %H:%M:%S'), self.team1,
+                    """.format(gt_str, self.team1,
                                self.team2, self.team1_moneyline, self.team2_moneyline,
                                self.team1_spread, self.team1_spread_line, self.team2_spread,
                                self.team2_spread_line, self.total, self.over_line,
