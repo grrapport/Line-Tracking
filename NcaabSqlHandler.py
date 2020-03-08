@@ -206,6 +206,32 @@ class SqlHandler:
             ret[temp[1]] = temp[0]
         return ret
 
+    def select_game_ids(self, team1, team2, date):
+        ret = None
+        select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Game_IDs WHERE "
+                                               "(Team1 = %s or Team2 = %s) AND "
+                                               "(Team1 = %s or Team2 = %s) AND "
+                                               "GameDate = %s"
+                                               )
+        self.cursor.execute(select_latest_full_game_ncaab_query, (team1, team1, team2, team2,
+                                                                  date))
+        result = self.cursor.fetchall()
+        for temp in result:
+            try:
+                ret = GameLines.GameID(int(temp[0]), int(temp[1]), int(temp[2]), temp[3])
+                return ret
+            except:
+                continue
+        return ret
+
+    def create_new_game_id(self, team1, team2, date):
+        insert_ncaab_full_game_archive_query = ("INSERT INTO NCAAB_Game_IDs "
+                                                "(Team1, Team2, GameDate)"
+                                                "VALUES (%s, %s, %s)"
+                                                )
+        self.cursor.execute(insert_ncaab_full_game_archive_query, (team1, team2, date))
+        self.mydb.commit()
+
     def close(self):
         self.cursor.close()
         self.mydb.close()
