@@ -95,7 +95,7 @@ class SqlHandler:
         new_line = None
         select_latest_full_game_ncaab_query = ("SELECT * FROM NCAAB_Full_Game_Lines_IDs WHERE "
                                                "GameID = %s AND "
-                                               "BookID = %s"
+                                               "BookID = %s "
                                                "order by LineTime desc "
                                                "Limit 1"
                                                )
