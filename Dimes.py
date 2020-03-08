@@ -60,7 +60,8 @@ def get_teams_and_date(tr):
     team1 = teams[1].strip()
     try:
         # adding 5 hours because it defaults to eastern time, we are putting in UTC
-        date_time = datetime.datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p") + datetime.timedelta(hours=5)
+        # changing to 4 because of time change
+        date_time = datetime.datetime.strptime(date_string, "%A, %B %d, %Y %I:%M %p") + datetime.timedelta(hours=4)
     except:
         return None
     return team1, team2, date_time
@@ -205,4 +206,10 @@ def get_ncaab_full_game_lines():
     browse.close()
     return full_game_lines
 
+
+'''
+lines = get_ncaab_full_game_lines()
+for line in lines:
+    print(line.output())
+'''
 
