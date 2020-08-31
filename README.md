@@ -1,5 +1,6 @@
 # Line-Tracking
 Get the lines, put them in the database.
+Added cloudbuild.yaml
 
 # Python Files
 GameLines: Has the classes and functions necessary for handling all your lines. Includes FullGameLine class for handling full games and their totals, spreads and moneylines. Also has some static functions for cleaning up team names
