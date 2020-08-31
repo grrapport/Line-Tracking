@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="169acd6f-c06e-44b3-a2b0-17f4ff221fab" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/app.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/app.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -66,16 +65,5 @@
     </state>
     <state x="-1275" y="23" width="1275" height="889" key="dock-window-1/0.23.1920.977/-1920.23.1920.1057@0.23.1920.977" timestamp="1581379455841" />
     <state x="-1410" y="23" width="1275" height="889" key="dock-window-1/0.23.1920.978/-1920.23.1920.1057@0.23.1920.978" timestamp="1581391501553" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Dimes.py</url>
-          <line>39</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
 </project>
