@@ -1,6 +1,6 @@
 runtime: python37
 env: flex
-entrypoint: python3 NcaabLineGetter.py
+entrypoint: NcaabLineGetter.py
 
 
 # This sample incurs costs to run on the App Engine flexible environment.
